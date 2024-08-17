@@ -6,6 +6,7 @@ import heroSliderData from "../../assets/fake-data/hero-slider";
 import FeatureProduct from "../../components/feature-product/FeatureProduct";
 import productData from "../../assets/fake-data/products";
 import Card from "../../components/card/Card";
+import Categories from "../../components/categories/Categories";
 
 const Home = () => {
     return (
@@ -20,6 +21,8 @@ const Home = () => {
                     ))}
                 </Grid>
             </div>
+
+            <Categories />
 
             <div className="feature-product">
                 <FeatureProduct type="trending" />
