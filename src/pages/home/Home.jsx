@@ -7,6 +7,7 @@ import FeatureProduct from "../../components/feature-product/FeatureProduct";
 import productData from "../../assets/fake-data/products";
 import Card from "../../components/card/Card";
 import Categories from "../../components/categories/Categories";
+import Contact from "../../components/contact/Contact";
 
 const Home = () => {
     return (
@@ -32,6 +33,8 @@ const Home = () => {
                     ))}
                 </Grid>
             </div>
+
+            <Contact />
         </Helmet>
     );
 };

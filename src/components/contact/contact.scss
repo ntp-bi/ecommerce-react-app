@@ -1,0 +1,57 @@
+@use "../../sass/" as *;
+
+.contact {
+    background-color: #2879fe;
+    color: white;
+    padding: 15px;
+    @include flex(center, center);
+
+    &__wrapper {
+        @include flex(center, space-between);
+        width: 80%;
+
+        span {
+            @include mobile {
+                font-size: 0.8rem;
+            }
+        }
+
+        .mail {
+            width: 50%;
+            @include flex(center, center);  
+
+            input {
+                padding: 10px;
+                border: none;
+                border-radius: 5px 0 0 5px;
+                width: 80%;
+
+                @include tablet {
+                    width: 70%;
+                }
+
+                @include mobile {
+                    width: 50%;
+                    font-size: 1rem;
+                }
+            }
+
+            button {
+                padding: 10px;
+                color: white;
+                background: #333;
+                border-radius: 0 5px 5px 0;
+                border: none;
+
+                @include mobile {
+                    font-size: 1rem;
+                }
+            }
+        }
+
+        .icons {
+            display: flex;
+            gap: 10px;
+        }
+    }
+}
