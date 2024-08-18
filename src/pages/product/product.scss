@@ -1,0 +1,157 @@
+@use "../../sass/" as *;
+
+.product {
+    @include flex(flex-start, flex-start);
+
+    @include mobile {
+        flex-direction: column;
+    }
+
+    &__left {
+        @include flex(flex-start, flex-start);
+        flex-wrap: wrap;
+        width: 50%;
+
+        @include tablet {
+            width: 70%;
+        }
+
+        @include mobile {
+            width: 100%;
+        }
+
+        &__images {
+            width: 15%;
+            display: flex;
+            flex-direction: column;
+
+            img {
+                cursor: pointer;
+            }
+        }
+
+        &__main {
+            flex-grow: 1;
+            padding-top: 100%;
+            position: relative;
+
+            img {
+                position: absolute;
+                top: 0;
+                left: 50%;
+                height: 100%;
+                width: 90%;
+                object-fit: cover;
+                transform: translateX(-50%);                    
+            }
+        }
+    }
+
+    &__right {
+        width: 50%;
+
+        @include mobile {
+            width: 100%;
+        }
+
+        & > * {
+            display: block;
+            margin-bottom: 1.2rem;
+        }
+
+        &__title {
+            font-size: 2rem;
+
+            @include mobile {
+                margin-top: 2rem;
+            }
+        }
+
+        &__price {
+            font-size: 2rem;
+            color: #2879fe;
+            font-weight: 500;
+        }
+
+        p {
+            text-align: justify;
+            color: gray;
+            line-height: 1.4;
+        }
+
+        &__quantity {
+            @include flex(center, flex-start);
+            font-size: 1.1rem;
+            gap: 14px;
+
+            button {
+                @include flex(center, center);
+                width: 50px;
+                height: 50px;
+                cursor: pointer;
+                border: none;
+                font-size: 1.5rem;
+                color: #555;
+
+                @include mobile {
+                    width: 30px;
+                    height: 30px;
+                }
+            }
+        }
+
+        &__btn--add {
+            @include flex(center, center);
+            width: 250px;
+            padding: 10px;
+            background-color: #2879fe;
+            color: white;
+            gap: 20px;
+            cursor: pointer;
+            border: none;
+            font-weight: 600;
+
+            @include mobile {
+                width: 100%;
+            }
+        }
+
+        &__links {
+            @include flex(center, unset);
+            gap: 20px;
+
+            &__item {
+                @include flex(center, center);
+                gap: 10px;
+                color: #2879fe;              
+            }
+        }
+
+        &__info{
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            color: gray;        
+            margin-top: 30px;
+
+            @include mobile {
+                @include flex(center, space-between);
+                flex-direction: row;
+            }
+      
+            hr{
+              width: 200px;
+              border: 1px solid rgb(238, 237, 237);
+
+              @include mobile {
+                display: none;
+              }
+            }
+          }
+      
+          hr{
+            border: 1px solid rgb(238, 237, 237);
+            
+          }
+    }
+}
