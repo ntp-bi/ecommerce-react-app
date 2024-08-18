@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 
 import SearchIcon from "@mui/icons-material/Search";
@@ -8,6 +8,8 @@ import ShoppingCartOutlinedIcon from "@mui/icons-material/ShoppingCartOutlined";
 import PersonOutlineOutlinedIcon from "@mui/icons-material/PersonOutlineOutlined";
 import FavoriteBorderOutlinedIcon from "@mui/icons-material/FavoriteBorderOutlined";
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
+
+import Cart from "../cart/Cart";
 
 import logoLeft from "../../assets/images/en.png";
 
@@ -67,6 +69,8 @@ const Header = () => {
     const headerRef = useRef(null);
     const rightMenuRef = useRef(null);
 
+    const [openCart, setOpenCart] = useState(false);
+
     const activeLeftNav = leftNav.findIndex((e) => e.path === pathname);
     const activeRightNav = rightNav.findIndex((e) => e.path === pathname);
 
@@ -103,7 +107,7 @@ const Header = () => {
                                 key={index}
                                 className={`header__menu__item ${
                                     index === activeLeftNav ? "active" : ""
-                                }`}                               
+                                }`}
                             >
                                 <Link to={item.path} className="header__menu__left__item">
                                     {item.display}
@@ -139,7 +143,10 @@ const Header = () => {
                             <SearchIcon className="header__menu__right__item__icon" />
                             <PersonOutlineOutlinedIcon className="header__menu__right__item__icon" />
                             <FavoriteBorderOutlinedIcon className="header__menu__right__item__icon" />
-                            <div className="cart-icon">
+                            <div
+                                className="cart-icon"
+                                onClick={() => setOpenCart(!openCart)}
+                            >
                                 <ShoppingCartOutlinedIcon className="header__menu__right__item__icon" />
                                 <span className="cart-badge">0</span>
                             </div>
@@ -147,6 +154,7 @@ const Header = () => {
                     </div>
                 </div>
             </nav>
+            {openCart && <Cart />}
         </header>
     );
 };
