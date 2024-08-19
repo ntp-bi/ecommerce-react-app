@@ -1,0 +1,62 @@
+@use '../../sass/' as *;
+
+.footer {
+    padding: 70px 0;
+    box-shadow: $box-shadow;
+    font-size: 1.1rem;
+    
+    &__about {
+        p {
+            margin-bottom: 2rem;
+        }
+    }
+
+    &__title {
+        text-transform: capitalize;
+        margin-bottom: 2rem;
+        font-weight: 500;
+        color: #555;
+    }
+
+    &__content{
+        p{
+            margin-bottom: 1.25rem;
+            text-align: justify;
+            font-size: 1rem;
+            color: gray;
+            line-height: 1.3rem;
+        }
+    }
+
+    &__bottom {
+        @include flex(center, space-between);
+
+        &__left {
+            @include flex(center, unset);
+
+            .logo {
+                color: $main-color;
+                font-size: 1.1rem;
+                font-weight: 600;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+            }
+
+            .copyright {
+                margin-left: 1rem;
+                color: gray;
+                font-size: 0.8rem;
+            }
+        }
+
+        &__right {
+            img {
+                height: 50px;
+
+                @include mobile {
+                    height: 30px;
+                }
+            }
+        }
+    }
+}
