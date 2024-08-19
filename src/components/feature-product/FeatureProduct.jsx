@@ -1,39 +1,17 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import PropTypes from "prop-types";
-import axios from "axios";
 
 import Grid from "../grid/Grid";
 import Card from "../card/Card";
 
+import useFetch from "../../hooks/useFetch";
+
 import "./feature-product.scss";
 
 const FeatureProduct = (props) => {
-    const [data, setData] = useState([]);
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get(
-                    `${import.meta.env.VITE_API_URL}/products?populate=*`,
-                    {
-                        headers: {
-                            Authorization: `bearer ${import.meta.env.VITE_API_TOKEN}`,
-                        },
-                    }
-                );
-                
-                if (response.data && response.data.data) {
-                    setData(response.data.data);
-                    console.log(response.data.data);                    
-                } else {
-                    console.error("Unexpected API response structure:", response);
-                }
-            } catch (error) {
-                console.error("Failed to fetch products:", error);
-            }
-        };
-        fetchData();
-    }, []);
+    const { data, loading, error } = useFetch(
+        `/products?populate=*&[filters][type][$eq]=${props.type}`
+    );
 
     return (
         <div className="feature-product">
@@ -49,9 +27,11 @@ const FeatureProduct = (props) => {
             </div>
             <div className="feature-product__content">
                 <Grid col={4} mdCol={2} smCol={1} gap={20}>
-                    {data.map((item) => (
-                        <Card key={item.id} item={item} />
-                    ))}
+                    {error
+                        ? "Something went wrong!"
+                        : loading
+                        ? "loading"
+                        : data.map((item) => <Card key={item.id} item={item} />)}
                 </Grid>
             </div>
         </div>
