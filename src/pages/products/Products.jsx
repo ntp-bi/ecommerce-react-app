@@ -1,5 +1,6 @@
 import React, { useRef, useState } from "react";
 import { useParams } from "react-router-dom";
+import useFetch from "../../hooks/useFetch";
 
 import ArrowBackIosNewOutlinedIcon from "@mui/icons-material/ArrowBackIosNewOutlined";
 
@@ -12,12 +13,28 @@ import "./products.scss";
 const Products = () => {
     const id = parseInt(useParams().id);
 
-    const [maxPrice, setMaxPrice] = useState(1000);
+    const [maxPrice, setMaxPrice] = useState(1000000);
     const [sort, setSort] = useState(null);
+    const [selectedSubCats, setSelectedSubCats] = useState([]);
 
     const filterRef = useRef(null);
 
     const showHideFilter = () => filterRef.current.classList.toggle("active");
+
+    const { data, loading, error } = useFetch(
+        `/sub-categories?[filters][categories][id][$eq]=${id}`
+    );
+
+    const handleSelectSubCategory = (e) => {
+        const value = e.target.value;
+        const isSelected = e.target.checked;
+
+        setSelectedSubCats(
+            isSelected
+                ? [...selectedSubCats, value]
+                : selectedSubCats.filter((item) => item !== value)
+        );
+    };
 
     return (
         <Helmet title="Sản phẩm">
@@ -31,33 +48,18 @@ const Products = () => {
                     </div>
                     <div className="products__left__filter">
                         <h2>Product Categories</h2>
-                        <div className="products__left__filter__input">
-                            <input
-                                type="checkbox"
-                                id="1"
-                                value={1}
-                                className="checkbox"
-                            />
-                            <label htmlFor="1">Shoes</label>
-                        </div>
-                        <div className="products__left__filter__input">
-                            <input
-                                type="checkbox"
-                                id="2"
-                                value={2}
-                                className="checkbox"
-                            />
-                            <label htmlFor="2">Skirts</label>
-                        </div>
-                        <div className="products__left__filter__input">
-                            <input
-                                type="checkbox"
-                                id="3"
-                                value={3}
-                                className="checkbox"
-                            />
-                            <label htmlFor="3">Coats</label>
-                        </div>
+                        {data?.map((item) => (
+                            <div className="products__left__filter__input" key={item.id}>
+                                <input
+                                    id={item.id}
+                                    className="checkbox"
+                                    type="checkbox"
+                                    value={id}
+                                    onChange={handleSelectSubCategory}
+                                />
+                                <label htmlFor={item.id}>{item.attributes.title}</label>
+                            </div>
+                        ))}
                     </div>
                     <div className="products__left__filter">
                         <h2>Filter by price</h2>
@@ -67,7 +69,7 @@ const Products = () => {
                                 className="range"
                                 type="range"
                                 min={0}
-                                max={1000}
+                                max={1000000}
                                 onChange={(e) => setMaxPrice(e.target.value)}
                             />
                             <span>1000</span>
@@ -100,13 +102,16 @@ const Products = () => {
                     </div>
                 </div>
                 <div className="products__left__filter__toggle">
-                    <button onClick={() => showHideFilter()}>
-                        bộ lọc
-                    </button>
+                    <button onClick={() => showHideFilter()}>bộ lọc</button>
                 </div>
                 <div className="products__right">
                     <img className="products__right__image" src={cateImg} alt="" />
-                    <List id={id} maxPrice={maxPrice} sort={sort} />
+                    <List
+                        id={id}
+                        subCats={selectedSubCats}
+                        maxPrice={maxPrice}
+                        sort={sort}
+                    />
                 </div>
             </div>
         </Helmet>
