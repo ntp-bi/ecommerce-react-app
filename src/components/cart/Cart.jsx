@@ -4,7 +4,10 @@ import { removeItem, resetCart } from "../../redux/cartReducer";
 
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 
+import { loadStripe } from "@stripe/stripe-js";
+
 import numberWithCommas from "../../utils/numberWithCommas";
+import { makeRequest } from "../../makeRequest";
 import "./cart.scss";
 
 const Cart = () => {
@@ -15,6 +18,23 @@ const Cart = () => {
         let total = 0;
         products.forEach((product) => (total += product.quantity * product.price));
         return total;
+    };
+
+    const stripePromise = loadStripe(
+        "pk_test_51PprDZDmm6t9yXdOE6E91IjQcYJlY9enF5gcPyoRgozNc3HcHvcI3L9OYpleuQJPYBbVd9wC49y07i07gDJFeTuA00CBbOBXLe"
+    );
+    const handlePayment = async () => {
+        try {
+            const stripe = await stripePromise;
+            const res = await makeRequest.post("/orders", {
+                products,
+            });
+            await stripe.redirectToCheckout({
+                sessionId: res.data.stripeSession.id,
+            });
+        } catch (err) {
+            console.log(err);
+        }
     };
 
     return (
@@ -43,7 +63,7 @@ const Cart = () => {
                 <span>SUBTOTAL</span>
                 <span>{numberWithCommas(totalPrice())}đ</span>
             </div>
-            <button>PROCEED TO CHECKOUT</button>
+            <button onClick={handlePayment}>PROCEED TO CHECKOUT</button>
             <span className="cart__reset" onClick={() => dispatch(resetCart())}>
                 Reset Cart
             </span>
