@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 
 const Helmet = (props) => {
-    document.title = props.title;
+    document.title = `NTP - ${props.title}`;
 
     useEffect(() => {
         window.scrollTo(0, 0);

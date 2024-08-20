@@ -39,80 +39,95 @@ const Products = () => {
     return (
         <Helmet title="Sản phẩm">
             <div className="products">
-                <div className="products__left" ref={filterRef}>
-                    <div
-                        className="products__left__close"
-                        onClick={() => showHideFilter()}
-                    >
-                        <ArrowBackIosNewOutlinedIcon />
-                    </div>
-                    <div className="products__left__filter">
-                        <h2>Product Categories</h2>
-                        {data?.map((item) => (
-                            <div className="products__left__filter__input" key={item.id}>
-                                <input
-                                    id={item.id}
-                                    className="checkbox"
-                                    type="checkbox"
-                                    value={id}
-                                    onChange={handleSelectSubCategory}
-                                />
-                                <label htmlFor={item.id}>{item.attributes.title}</label>
+                {loading ? (
+                    "loading"
+                ) : (
+                    <>
+                        <div className="products__left" ref={filterRef}>
+                            <div
+                                className="products__left__close"
+                                onClick={() => showHideFilter()}
+                            >
+                                <ArrowBackIosNewOutlinedIcon />
                             </div>
-                        ))}
-                    </div>
-                    <div className="products__left__filter">
-                        <h2>Filter by price</h2>
-                        <div className="products__left__filter__input">
-                            <span>0</span>
-                            <input
-                                className="range"
-                                type="range"
-                                min={0}
-                                max={1000000}
-                                onChange={(e) => setMaxPrice(e.target.value)}
-                            />
-                            <span>1000</span>
+                            <div className="products__left__filter">
+                                <h2>Product Categories</h2>
+                                {data?.map((item) => (
+                                    <div
+                                        className="products__left__filter__input"
+                                        key={item.id}
+                                    >
+                                        <input
+                                            id={item.id}
+                                            className="checkbox"
+                                            type="checkbox"
+                                            value={id}
+                                            onChange={handleSelectSubCategory}
+                                        />
+                                        <label htmlFor={item.id}>
+                                            {item.attributes.title}
+                                        </label>
+                                    </div>
+                                ))}
+                            </div>
+                            <div className="products__left__filter">
+                                <h2>Filter by price</h2>
+                                <div className="products__left__filter__input">
+                                    <span>0</span>
+                                    <input
+                                        className="range"
+                                        type="range"
+                                        min={0}
+                                        max={1000000}
+                                        onChange={(e) => setMaxPrice(e.target.value)}
+                                    />
+                                    <span>1000</span>
+                                </div>
+                            </div>
+                            <div className="products__left__filter">
+                                <h2>Sort by</h2>
+                                <div className="products__left__filter__input">
+                                    <input
+                                        id="asc"
+                                        className="radio"
+                                        type="radio"
+                                        name="price"
+                                        value="asc"
+                                        onChange={(e) => setSort("asc")}
+                                    />
+                                    <label htmlFor="asc">Price (Lowest first)</label>
+                                </div>
+                                <div className="products__left__filter__input">
+                                    <input
+                                        id="desc"
+                                        className="radio"
+                                        type="radio"
+                                        name="price"
+                                        value="desc"
+                                        onChange={(e) => setSort("desc")}
+                                    />
+                                    <label htmlFor="desc">Price (Highest first)</label>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    <div className="products__left__filter">
-                        <h2>Sort by</h2>
-                        <div className="products__left__filter__input">
-                            <input
-                                id="asc"
-                                className="radio"
-                                type="radio"
-                                name="price"
-                                value="asc"
-                                onChange={(e) => setSort("asc")}
-                            />
-                            <label htmlFor="asc">Price (Lowest first)</label>
+                        <div className="products__left__filter__toggle">
+                            <button onClick={() => showHideFilter()}>bộ lọc</button>
                         </div>
-                        <div className="products__left__filter__input">
-                            <input
-                                id="desc"
-                                className="radio"
-                                type="radio"
-                                name="price"
-                                value="desc"
-                                onChange={(e) => setSort("desc")}
+                        <div className="products__right">
+                            <img
+                                className="products__right__image"
+                                src={cateImg}
+                                alt=""
                             />
-                            <label htmlFor="desc">Price (Highest first)</label>
+                            <List
+                                id={id}
+                                subCats={selectedSubCats}
+                                maxPrice={maxPrice}
+                                sort={sort}
+                            />
                         </div>
-                    </div>
-                </div>
-                <div className="products__left__filter__toggle">
-                    <button onClick={() => showHideFilter()}>bộ lọc</button>
-                </div>
-                <div className="products__right">
-                    <img className="products__right__image" src={cateImg} alt="" />
-                    <List
-                        id={id}
-                        subCats={selectedSubCats}
-                        maxPrice={maxPrice}
-                        sort={sort}
-                    />
-                </div>
+                    </>
+                )}
             </div>
         </Helmet>
     );
