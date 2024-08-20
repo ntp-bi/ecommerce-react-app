@@ -14,6 +14,7 @@ import Cart from "../cart/Cart";
 import logoLeft from "../../assets/images/en.png";
 
 import "./header.scss";
+import { useSelector } from "react-redux";
 
 const leftNav = [
     {
@@ -65,6 +66,7 @@ const rightNav = [
 
 const Header = () => {
     const { pathname } = useLocation();
+    const products = useSelector((state) => state.cart.products);
 
     const headerRef = useRef(null);
     const rightMenuRef = useRef(null);
@@ -148,7 +150,7 @@ const Header = () => {
                                 onClick={() => setOpenCart(!openCart)}
                             >
                                 <ShoppingCartOutlinedIcon className="header__menu__right__item__icon" />
-                                <span className="cart-badge">0</span>
+                                <span className="cart-badge">{products.length}</span>
                             </div>
                         </div>
                     </div>
