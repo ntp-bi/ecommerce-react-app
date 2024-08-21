@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { removeItem, resetCart } from "../../redux/cartReducer";
+import { removeItem, resetCart, updateQuantity } from "../../redux/cartReducer";
 
 import DeleteOutlinedIcon from "@mui/icons-material/DeleteOutlined";
 
@@ -18,6 +18,20 @@ const Cart = () => {
         let total = 0;
         products.forEach((product) => (total += product.quantity * product.price));
         return total;
+    };
+
+    const updateQuantityCart = (item, quantity, opt) => {
+        if (opt === "+") {
+            dispatch(updateQuantity({ ...item, quantity: quantity + 1 }));
+        }
+        if (opt === "-") {
+            dispatch(
+                updateQuantity({
+                    ...item,
+                    quantity: quantity - 1 === 0 ? 1 : quantity - 1,
+                })
+            );
+        }
     };
 
     const stripePromise = loadStripe(
@@ -49,6 +63,27 @@ const Cart = () => {
                     <div className="cart__item__details">
                         <h1>{item.title}</h1>
                         <p>{item.desc?.substring(0, 100)}</p>
+                        <div className="cart__item__details__quantity">
+                            <button
+                                className="cart__item__details__quantity__btn"
+                                onClick={() =>
+                                    updateQuantityCart(item, item.quantity, "-")
+                                }
+                            >
+                                -
+                            </button>
+                            <div className="cart__item__details__quantity__input">
+                                {item.quantity}
+                            </div>
+                            <button
+                                className="cart__item__details__quantity__btn"
+                                onClick={() =>
+                                    updateQuantityCart(item, item.quantity, "+")
+                                }
+                            >
+                                +
+                            </button>
+                        </div>
                         <div className="cart__item__details__price">
                             {item.quantity} x {numberWithCommas(item.price)}đ
                         </div>
@@ -63,7 +98,7 @@ const Cart = () => {
                 <span>SUBTOTAL</span>
                 <span>{numberWithCommas(totalPrice())}đ</span>
             </div>
-            <button onClick={handlePayment}>PROCEED TO CHECKOUT</button>
+            <button className="cart__btn" onClick={handlePayment}>PROCEED TO CHECKOUT</button>
             <span className="cart__reset" onClick={() => dispatch(resetCart())}>
                 Reset Cart
             </span>

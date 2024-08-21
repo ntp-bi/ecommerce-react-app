@@ -2,6 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 import numberWithCommas from "../../utils/numberWithCommas";
 
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+
+import Button from "../button/Button";
 import "./card.scss";
 
 const Card = (props) => {
@@ -37,6 +40,9 @@ const Card = (props) => {
                     </span>
                     {numberWithCommas(item.attributes?.price)}đ
                 </div>
+                <Button size="sm" animate={true} icon={<ShoppingCartIcon />}>
+                    buy now
+                </Button>
             </div>
         </Link>
     );

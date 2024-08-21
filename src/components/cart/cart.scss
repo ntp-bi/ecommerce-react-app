@@ -6,12 +6,20 @@
     right: 0;
     width: 35rem;
     padding: 20px;
-    z-index: 999;
+    z-index: 100;
     background-color: $main-bg;
     box-shadow: 0px 0px 7px -5px rgba(0, 0, 0, 0.5);
     -webkit-box-shadow: 0px 0px 7px -5px rgba(0, 0, 0, 0.5);
     max-height: 70vh;
     overflow-y: scroll;
+
+    @include tablet {
+        top: $header-tablet-height;
+    }
+
+    @include mobile {
+        top: $header-mobile-height;
+    }
     
     h1 {
         margin-bottom: 30px;
@@ -47,6 +55,29 @@
             &__price {
                 color: #2879fe;
             }
+
+            &__quantity {
+                @include flex(flex-start, flex-start);
+                margin-bottom: 10px;
+
+                &__btn {
+                    @include flex(center, center);
+                    width: 20px;
+                    height: 20px;
+                    border: 1px solid $txt-second-color;
+                    font-size: 1.2rem;
+                    cursor: pointer;
+                }
+
+                &__input {
+                    @include flex(center, center);
+                    height: 20px;
+                    width: 60px;
+                    font-size: 1rem;
+                    border-top: 1px solid $txt-second-color;
+                    border-bottom: 1px solid $txt-second-color;
+                }
+            }
         }
     }
 
@@ -59,14 +90,15 @@
     &__total {
         @include flex(center, space-between);
         font-weight: 500;
-        font-size: 18px;
+        font-size: 1.2rem;
         margin-bottom: 20px;
     }
 
-    button {
+    .cart__btn {
         @include flex(center, center);
         width: 250px;
-        padding: 10px;       
+        padding: 10px; 
+        font-size: 1rem;      
         gap: 20px;
         cursor: pointer;
         border: none;
@@ -74,11 +106,19 @@
         color: white;
         font-weight: 500;
         margin-bottom: 20px;
+
+        @include tablet {
+            width: 200px;
+        }
+
+        @include mobile {
+            width: 150px;
+        }
     }
 
     &__reset {
         color: red;
-        font-size: 12px;
+        font-size: 0.9rem;
         cursor: pointer;
     }
 }
